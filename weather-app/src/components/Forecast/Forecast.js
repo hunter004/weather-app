@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import Conditions from '../Conditions/Conditions';
+import classes from './Forecast.module.css';
+
 const Forecast = () => {
     let [city, setCity] = useState('');
     let [unit, setUnit] = useState('metric');
@@ -7,7 +9,7 @@ const Forecast = () => {
     let [responseObj, setResponseObj] = useState({});
     function getForecast(e) {
         e.preventDefault();
-        fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=${unit}&key=EPCE9463ZSP7EY7Z55WYJ6TE4&contentType=json`, {
+        fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=${unit}&key=${process.env.REACT_APP_API_KEY}&contentType=json`, {
         "method": "GET",
         "headers": {
         }
@@ -31,8 +33,9 @@ const Forecast = () => {
                 maxLength="50"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
+                className={classes.textInput}
                 />
-                <label>
+                <label className={classes.Radio}>
                     <input 
                         type="radio"
                         name="units"
@@ -41,7 +44,7 @@ const Forecast = () => {
                         onChange={(e) => setUnit(e.target.value)}
                         /> Celcius
                 </label>
-                <label>
+                <label className={classes.Radio}>
                     <input 
                     type="radio"
                     name="units"
@@ -50,7 +53,7 @@ const Forecast = () => {
                     onChange={(e) => setUnit(e.target.value)}
                     /> Fahrenheit
                 </label>
-                <button type="submit">Get Forcast</button>
+                <button className={classes.Button} type="submit">Get Forcast</button>
            </form>
            <Conditions responseObj={responseObj} />
        </div>
